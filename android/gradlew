@@ -1,0 +1,5 @@
+#!/bin/sh
+DIRNAME=$(cd "$(dirname "$0")" && pwd)
+JAVA_CMD="${JAVA_HOME:-}/bin/java"
+[ -z "$JAVA_HOME" ] && JAVA_CMD="java"
+exec "$JAVA_CMD" -jar "$DIRNAME/gradle/wrapper/gradle-wrapper.jar" "$@"

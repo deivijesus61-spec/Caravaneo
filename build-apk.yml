@@ -1,0 +1,61 @@
+name: Build Caravaneo APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android build tools
+        run: |
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+          echo "Android SDK ready"
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+
+      - name: Build Release APK
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: Build Debug APK (for direct sideload)
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Rename APKs
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk Caravaneo-release.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk Caravaneo-debug.apk
+          ls -lh *.apk
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Caravaneo-APK-Release
+          path: Caravaneo-release.apk
+          retention-days: 30
+
+      - name: Upload Debug APK (easier to install)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Caravaneo-APK-Debug
+          path: Caravaneo-debug.apk
+          retention-days: 30

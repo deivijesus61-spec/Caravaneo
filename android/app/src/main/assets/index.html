@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"/>
+  <meta name="theme-color" content="#0b130e"/>
+  <title>Caravaneo</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* Android-specific: remove tap highlight, ensure full height */
+    body { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    #root { position: fixed; inset: 0; }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <svg class="loading-logo" width="72" height="72" viewBox="0 0 100 100">
+      <rect width="100" height="100" rx="22" fill="#0b130e"/>
+      <g fill="#4ade80">
+        <rect x="32" y="42" width="36" height="8" rx="4"/>
+        <rect x="30" y="50" width="40" height="26" rx="8"/>
+        <rect x="34" y="28" width="9" height="18" rx="4"/>
+        <rect x="45" y="25" width="9" height="20" rx="4"/>
+        <rect x="56" y="27" width="8" height="18" rx="4"/>
+        <rect x="22" y="56" width="10" height="14" rx="5"/>
+      </g>
+      <polygon points="58,18 48,36 56,36 46,58 62,36 54,36 66,18" fill="#facc15" opacity="0.9"/>
+    </svg>
+    <div class="loading-text">Cargando Caravaneo…</div>
+  </div>
+  <div id="root"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="bundle.js"></script>
+</body>
+</html>
